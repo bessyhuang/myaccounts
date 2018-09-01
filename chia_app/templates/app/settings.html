@@ -1,0 +1,65 @@
+{% extends 'app/base.html' %}
+{% block content %}
+
+<div class="container-fluid">
+      <div class="row">
+
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+          <div class="sidebar-sticky">
+            <ul class="nav flex-column">
+              <li class="nav-item">
+		<a class="nav-link active" href="/">
+			<span data-feather="home"></span>
+			帳務總覽<span class="sr-only">(current)</span>
+		</a>
+	      </li>
+              <li class="nav-item">
+		<a class="nav-link" href="/settings">
+			<span data-feather="file"></span>
+			設定
+		</a>
+	      </li>
+            </ul>
+          </div>
+        </nav>
+
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+          	<div class="d-flex flex-wrap justify-content-between flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+            		<h1 class="page-header">分類設定</h1>
+          	</div>
+
+		<form action="/add_category" method="post" >
+		{% csrf_token %}
+			<input type="text" name="add_category_name" class="col-sm-3">
+			&emsp;
+			<input type="submit" value="新增分類" class="btn col-sm-3">
+		</form>
+		<br/>
+
+		<table class="table table-scrollable">
+			<thead>
+				<tr>
+			     		<th>分類</th>
+			   	</tr>
+			</thead>
+			<tbody>
+			 	{% for category in categories %}
+				<td>
+					<div class="col-8 .col-sm-6">{{ category.category }}</div>
+					<div class="col-8 .col-sm-6"><a href="/delete_category/{{ category.category }}">刪除</a></div>	
+				</td>
+				{% endfor %}
+			</tbody>
+		</table>
+
+        </main>
+
+     </div> 
+
+</div> 
+
+
+
+
+{% endblock %}
