@@ -4,7 +4,7 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.frontpage),
-    url(r'^settings$', views.settings),
+    url(r'^settings/$', views.settings),
     url(r'^add_category$', views.addCategory),
     url(r'^delete_category/(?P<category>\w+)',views.deleteCategory),
 
