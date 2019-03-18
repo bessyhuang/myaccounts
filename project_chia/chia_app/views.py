@@ -3,6 +3,8 @@ from .models import Record, Category
 from .forms import RecordForm
 from django.contrib.auth.decorators import login_required
 
+from django.core.files.storage import FileSystemStorage
+
 # Create your views here.
 @login_required
 def hello(request):
@@ -51,3 +53,14 @@ def deleteRecord(request):
         id = request.POST['delete_val']
         Record.objects.filter(id=id).delete()
     return redirect('/')
+
+###upload
+def upload(request):
+    context = {}
+    if request.method == 'POST':
+        uploaded_file = request.FILES['document']
+        fs = FileSystemStorage()
+        name = fs.save(uploaded_file.name, uploaded_file)
+        url = fs.url(name)
+        context['url'] = fs.url(name)
+    return render(request, 'app/upload.html', context)

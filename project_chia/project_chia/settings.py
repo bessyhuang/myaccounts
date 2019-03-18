@@ -124,3 +124,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')    ###upload(build a file 'media' in same level path as manage.py)
+MEDIA_URL = '/media/'       ###upload
