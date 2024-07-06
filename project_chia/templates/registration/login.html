@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block nav_title %}Log In{% endblock %}
+
+{% block content %}
+<!-- pt-3: add a top padding of 16px -->
+<div class="container pt-3">
+
+	{% if form.errors %}
+	<div class="alert alert-danger" role="alert">
+		您的帳號或密碼有誤。
+	</div>
+	{% endif %}
+
+	<form method="post" action="/accounts/login/">
+		{% csrf_token %}
+		<div class="form-group">
+			{{ form.username.label_tag }}
+			{{ form.username }}
+		</div>
+		<div class="form-group">
+			{{ form.password.label_tag }}
+			{{ form.password }}
+		</div>
+		<button type="submit" class="btn btn-light">Submit</button>
+	</form>
+
+</div>
+
+<!-- <script>alert("測試用～ 帳號：bessy 密碼：bessy")</script> -->
+{% endblock %}

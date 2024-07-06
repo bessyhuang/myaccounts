@@ -13,15 +13,18 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url, include
 from django.contrib import admin
-from django.contrib.auth import views as auth_views
-from . import views
+from django.urls import re_path, path, include
 
+from django.contrib.auth import views as auth_views
+#from . import views
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'^', include('chia_app.urls')),
-    url(r'^accounts/login', auth_views.login),
-    url(r'^accounts/logout', views.logout),
+    path('admin/', admin.site.urls),
+    path('app/', include('chia_app.urls')),
+
+    # login, logout, password_change, password_reset
+    path("accounts/", include("django.contrib.auth.urls")),
+    #url(r'^login/$', authentication_views.login_with_check, name='login'),
+    path('accounts/logout/', auth_views.LogoutView.as_view(), name='logout'),
 ]

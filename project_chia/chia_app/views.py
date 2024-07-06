@@ -32,12 +32,12 @@ def addCategory(request):
         posted_data = request.POST
         category = posted_data['add_category_name']
         Category.objects.get_or_create(category=category)
-    return redirect('/settings')
+    return redirect('/app/settings')
 
 @login_required
 def deleteCategory(request,category):
     Category.objects.filter(category=category).delete()
-    return redirect('/settings')
+    return redirect('/app/settings')
 
 @login_required
 def addRecord(request):
@@ -45,14 +45,14 @@ def addRecord(request):
         form = RecordForm(request.POST)
         if form.is_valid():
             form.save()
-    return redirect('/')
+    return redirect('/app')
 
 @login_required
 def deleteRecord(request):
     if request.method == 'POST':
         id = request.POST['delete_val']
         Record.objects.filter(id=id).delete()
-    return redirect('/')
+    return redirect('/app')
 
 ###upload
 def upload(request):
