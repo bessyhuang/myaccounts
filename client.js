@@ -1,11 +1,13 @@
-const { Client } = require('pg');
+import 'dotenv/config' // populate process.env for imported files
 
+const { Client } = require('pg');
+const { POSTGRES_DB, POSTGRES_HOST, POSTGRES_PORT, POSTGRES_USER, POSTGRES_PASSWORD } = process.env
 const pgclient = new Client({
-    database: process.env.POSTGRES_DB,
-    host: process.env.POSTGRES_HOST,
-    port: process.env.POSTGRES_PORT,
-    user: process.env.POSTGRES_USER,
-    password: process.env.POSTGRES_PASSWORD
+    database: POSTGRES_DB,
+    host: POSTGRES_HOST,
+    port: POSTGRES_PORT,
+    user: POSTGRES_USER,
+    password: POSTGRES_PASSWORD
 });
 
 pgclient.connect();
