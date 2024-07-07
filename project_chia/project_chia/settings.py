@@ -11,8 +11,9 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os
-from decouple import config
 from pathlib import Path
+from decouple import config
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 #BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -126,8 +127,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')    ###upload(build a file 'media' in same level path as manage.py)
-MEDIA_URL = '/media/'       ###upload
+### upload (build a file 'media' in same level path as manage.py)
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
