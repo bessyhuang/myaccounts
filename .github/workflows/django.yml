@@ -16,6 +16,26 @@ jobs:
       matrix:
         python-version: [3.12]
 
+    # Service containers to run with `container-job`
+    services:
+      # Label used to access the service container
+      postgres:
+        # Docker Hub image
+        image: postgres
+        env:
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python ${{ matrix.python-version }}
@@ -26,11 +46,23 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
+
+    - name: Connect to PostgreSQL
+      run: node client.js
+      # Environment variables used by the `client.js` script to create a new PostgreSQL table.
+      env:
+        # The hostname used to communicate with the PostgreSQL service container
+        POSTGRES_HOST: postgres
+        # The default PostgreSQL port
+        POSTGRES_PORT: 5432
+
     - name: Run Tests
+      env:
+        DEBUG: "0"
+        SECRET_KEY: ${{ secrets.SECRET_KEY }}
+        DB_NAME: ${{ secrets.DB_NAME }}
+        DB_USER: ${{ secrets.DB_USER }}
+        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        DB_HOST: ${{ secrets.DB_HOST }}
       run: |
-        export SECRET_KEY=${{ secrets.SECRET_KEY }}
-        export DB_NAME=${{ secrets.DB_NAME }}
-        export DB_USER=${{ secrets.DB_USER }}
-        export DB_PASSWORD=${{ secrets.DB_PASSWORD }}
-        export DB_HOST=${{ secrets.DB_HOST }}
         python ./project_chia/manage.py runserver
