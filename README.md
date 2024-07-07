@@ -1,5 +1,6 @@
 # myaccounts
 Accounting app (記帳app)
+![pylint]()
 
 我的實作：
 >>  URL: https://bessyhuang.pythonanywhere.com
@@ -10,4 +11,4 @@ Accounting app (記帳app)
 ## MariaDB 安裝於 Django 的操作步驟
 * django mariadb ubuntu 18.04.odt
 
-
+## Updated: Use Postgres as a database
