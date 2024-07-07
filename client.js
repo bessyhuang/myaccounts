@@ -9,7 +9,7 @@ const { POSTGRES_DB, POSTGRES_HOST, POSTGRES_PORT, POSTGRES_USER, POSTGRES_PASSW
 //     password: POSTGRES_PASSWORD
 // });
 
-const pgclient = new pg.Pool({
+const pgclient = new Client.Pool({
   connectionString: process.env.DATABASE_URL
 });
 
