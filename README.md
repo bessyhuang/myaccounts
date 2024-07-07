@@ -1,6 +1,6 @@
 # myaccounts
 Accounting app (記帳app)
-![pylint]()
+![pylint](https://img.shields.io/badge/PyLint-6.02-orange?logo=python&logoColor=white)
 
 我的實作：
 >>  URL: https://bessyhuang.pythonanywhere.com
