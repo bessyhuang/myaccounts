@@ -1,5 +1,4 @@
-import 'dotenv/config' // populate process.env for imported files
-
+const dotenv = require('dotenv');
 const { Client } = require('pg');
 const { POSTGRES_DB, POSTGRES_HOST, POSTGRES_PORT, POSTGRES_USER, POSTGRES_PASSWORD } = process.env
 const pgclient = new Client({
