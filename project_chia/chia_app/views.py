@@ -18,21 +18,31 @@ def hello(request):
 @login_required
 def frontpage(request):
     """frontpage function"""
-    record_form = RecordForm(initial={'balance_type': '支出'})
-    records = Record.objects.filter()
-    income_list = [record.cash for record in records if record.balance_type == '收入']
-    outcome_list = [record.cash for record in records if record.balance_type == '支出']
-    income = sum(income_list) if len(income_list)!=0 else 0
-    outcome = sum(outcome_list) if len(outcome_list)!=0 else 0
-    net = income - outcome
-    return render(request,'app/index.html', locals())
+    # record_form = RecordForm(initial={'balance_type': '支出'})
+    context = {}
+    records = Record.objects.all()
+
+    income = 0
+    outcome = 0
+    for r in records:
+        if r.balance_type == '收入':
+            income += r.cash
+        elif r.balance_type == '支出':
+            outcome += r.cash
+
+    context["record_form"] = RecordForm()
+    context["records"] = records
+    context["income"] = income
+    context["outcome"] = outcome
+    context["net"] = income - outcome
+    return render(request,'app/index.html', context)
 
 @login_required
 def settings(request):
     """settings function"""
-    categories = Category.objects.filter()
-    print(categories)
-    return render(request,'app/settings.html', locals())
+    context = {}
+    context["categories"] = Category.objects.all()
+    return render(request,'app/settings.html', context)
 
 @login_required
 def add_category(request):

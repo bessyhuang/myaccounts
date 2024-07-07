@@ -10,15 +10,18 @@ class Category(models.Model):
     """定義收支類別"""
     category = CharField(max_length=20)
 
-    # def __str__(self):
-    #     return self.category
+    def __str__(self):
+        return F'{self.category}'
 
 class Record(models.Model):
     """定義收支記錄的欄位"""
     date = DateField()
     description = CharField(max_length=300)
-    category = ForeignKey(Category, on_delete=models.SET_NULL, null=True)	#外來鍵是一個(或數個)指向另外一個表格主鍵的欄位。
+    # 外來鍵是一個(或數個)指向另外一個表格主鍵的欄位。
+    category = ForeignKey(Category, on_delete=models.SET_NULL, null=True)
     cash = IntegerField()
-    balance_type = CharField(max_length=2, choices=BALANCE_TYPE)	#收/支choices只有兩種，已定義在上方的BALANCE_TYPE
-    # def __str__(self):
-    #     return self.description
+    # 收/支 choices 只有兩種，已定義在上方的 BALANCE_TYPE
+    balance_type = CharField(max_length=2, choices=BALANCE_TYPE)
+
+    def __str__(self):
+        return F'收支描述：{self.description}'
