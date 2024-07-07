@@ -5,20 +5,20 @@
       <div class="row">
 
 		<nav class="col-2 d-md-block bg-light sidebar">
-			<div class="sidebar-sticky p-4">
+			<div class="sidebar-sticky p-3 pt-5">
 				<ul class="nav flex-column">
 					<li class="nav-item">
-						<a class="nav-link" href="/app">帳務總覽</a>
+						<a class="nav-link h5" href="/app">帳務總覽</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link active" href="/app/settings">設定</a>
+						<a class="nav-link active h5" href="/app/settings">設定</a>
 					</li>
 				</ul>
 			</div>
 		</nav>
 
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-          	<div class="d-flex flex-wrap justify-content-between flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+        <div role="main" class="col-lg-10 col-md-auto ml-md-auto px-3">
+          	<div class="d-flex flex-wrap justify-content-between flex-md-nowrap align-items-center pb-1 mb-3 border-bottom">
 				<h1 class="page-header">分類設定</h1>
           	</div>
 
@@ -27,28 +27,39 @@
 				<div class="input-group mb-3">
 					<input type="text" class="form-control" placeholder="請輸入分類" name="add_category_name">
 					<div class="input-group-append">
-					<button class="btn btn-dark" type="submit">新增分類</button>
+						<button class="btn btn-dark" type="submit">新增分類</button>
 					</div>
 				</div>
 			</form>
-			<br/>
 
-			<table class="table table-scrollable">
-				<thead>
-					<tr>
-						<th>分類</th>
-					</tr>
-				</thead>
-				<tbody>
-					{% for category in categories %}
-					<td>
-						<div class="col-8 .col-sm-6">{{ category.category }}</div>
-						<div class="col-8 .col-sm-6"><a href="/app/delete_category/{{ category.category }}">刪除</a></div>	
-					</td>
-					{% endfor %}
-				</tbody>
-			</table>
-        </main>
+			<div class="d-flex flex-wrap justify-content-between flex-md-nowrap align-items-center pb-1 mb-3 pt-5">
+				<h2 class="sub-header">收支類別</h2>
+          	</div>
+			<div class="table-responsive">
+				<table class="table table-scrollable table-striped">
+					<col style="width:50%" />
+					<col style="width:50%" />
+					<thead style="display:none">
+						<tr>
+							<th>收支類別</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for category in categories %}
+						<tr class="ml-md-auto col-md-auto">
+							<td class="ml-md-auto col-md-auto col-lg-10">
+								<p class="h5 text-center">{{ category.category }}</p>
+							</td>
+							<td class="ml-md-auto col-md-auto col-lg-10 col text-center">
+								<a class="btn btn-dark h4" href="/app/delete_category/{{ category.category }}">刪除</a>
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+        </div>
 
      </div>
 </div> 
