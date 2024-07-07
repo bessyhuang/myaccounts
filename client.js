@@ -11,7 +11,7 @@ const { POSTGRES_DB, POSTGRES_HOST, POSTGRES_PORT, POSTGRES_USER, POSTGRES_PASSW
 //     password: POSTGRES_PASSWORD
 // });
 
-const pgclient = new pg({
+const pgclient = pg({
   connectionString: process.env.DATABASE_URL
 });
 
