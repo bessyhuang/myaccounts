@@ -1,6 +1,6 @@
 # myaccounts
 ![pylint](https://img.shields.io/badge/PyLint-6.54-orange?logo=python&logoColor=white)
-![Django CI]()
+[![Django CI](https://github.com/bessyhuang/myaccounts/actions/workflows/django.yml/badge.svg)](https://github.com/bessyhuang/myaccounts/actions/workflows/django.yml)
 
 Accounting app (記帳app)
 
