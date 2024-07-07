@@ -1,5 +1,9 @@
 const dotenv = require('dotenv');
-const { Client } = require('pg');
+
+// const { Client } = require('pg');
+import pg from 'pg';
+const { Pool } = pg;
+
 const { POSTGRES_DB, POSTGRES_HOST, POSTGRES_PORT, POSTGRES_USER, POSTGRES_PASSWORD } = process.env
 // const pgclient = new Client({
 //     database: POSTGRES_DB,
@@ -9,7 +13,7 @@ const { POSTGRES_DB, POSTGRES_HOST, POSTGRES_PORT, POSTGRES_USER, POSTGRES_PASSW
 //     password: POSTGRES_PASSWORD
 // });
 
-const pgclient = new Client.Pool({
+const pgclient = new Pool({
   connectionString: process.env.DATABASE_URL
 });
 
