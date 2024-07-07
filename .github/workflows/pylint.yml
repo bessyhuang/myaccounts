@@ -16,7 +16,7 @@ jobs:
       uses: Silleellie/pylint-github-action@v2
       with:
         lint-path: |
-          project_chia
+          project_chia/chia_app
         python-version: ${{ matrix.python-version }}
     - uses: actions/checkout@v4
     - name: Set up Python ${{ matrix.python-version }}
