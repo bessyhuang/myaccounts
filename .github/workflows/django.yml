@@ -51,6 +51,7 @@ jobs:
 
     - name: Connect to PostgreSQL
       run: |
+        export DATABASE_URL=${{ secrets.POSTGRES_DB }}://${{ secrets.POSTGRES_USER }}:${{ secrets.POSTGRES_PASSWORD }}@${{ secrets.POSTGRES_HOST }}:${{ secrets.POSTGRES_PORT }}
         npm install --save dotenv
         npm install --save pg
         node client.js
