@@ -38,17 +38,21 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v3
       with:
         python-version: ${{ matrix.python-version }}
+        
     - name: Install Dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
     - name: Connect to PostgreSQL
-      run: node client.js
+      run: |
+        npm install --save pg
+        node client.js
       # Environment variables used by the `client.js` script to create a new PostgreSQL table.
       env:
         # The hostname used to communicate with the PostgreSQL service container
