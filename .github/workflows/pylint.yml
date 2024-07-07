@@ -12,12 +12,13 @@ jobs:
       matrix:
         python-version: ["3.11", "3.12"]
     steps:
-    # - uses: actions/checkout@v4
-    - uses: Silleellie/pylint-github-action@v2
+    - name: PyLint with dynamic badge
+      uses: Silleellie/pylint-github-action@v2
       with:
         lint-path: |
           project_chia
-        python-version: 3.11
+        python-version: ${{ matrix.python-version }}
+    - uses: actions/checkout@v4
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v3
       with:
@@ -29,3 +30,4 @@ jobs:
     - name: Analysing the code with pylint
       run: |
         pylint $(git ls-files '*.py')
+    
