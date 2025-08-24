@@ -27,3 +27,5 @@ jobs:
         lint-path: |
           project_chia/chia_app
         python-version: ${{ matrix.python-version }}
+    - name: Run PyLint
+      run: pylint myaccounts/project_chia/
