@@ -56,12 +56,12 @@ jobs:
         done
           
     - name: Run migrations and tests with coverage
-      # env:
-      #   DB_NAME: ${{ secrets.POSTGRES_DB }}
-      #   DB_USER: ${{ secrets.POSTGRES_USER }}
-      #   DB_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-      #   DB_HOST: localhost
-      #   SECRET_KEY: ${{ secrets.SECRET_KEY }}
+      env:
+        DB_NAME: ${{ secrets.POSTGRES_DB }}
+        DB_USER: ${{ secrets.POSTGRES_USER }}
+        DB_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+        DB_HOST: localhost
+        SECRET_KEY: ${{ secrets.SECRET_KEY }}
       run: |
         cd project_chia
         python manage.py migrate
