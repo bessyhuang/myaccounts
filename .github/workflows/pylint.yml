@@ -28,4 +28,9 @@ jobs:
           project_chia/chia_app
         python-version: ${{ matrix.python-version }}
     - name: Run PyLint
-      run: pylint project_chia/chia_app --ignore=migrations
+      run: |
+        # 安裝 pylint 與 pylint-django
+        pip install pylint pylint-django
+
+        # 執行 PyLint，忽略 migrations 資料夾，並載入 pylint-django plugin
+        pylint --load-plugins pylint_django project_chia/chia_app --ignore=migrations
