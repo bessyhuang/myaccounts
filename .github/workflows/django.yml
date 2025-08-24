@@ -48,11 +48,11 @@ jobs:
         coverage report
         coverage xml
 
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v4
+    - name: Upload coverage reports to Codecov
+      uses: codecov/codecov-action@v5
       with:
         files: ./coverage.xml
-        fail_ci_if_error: true
+        token: ${{ secrets.CODECOV_TOKEN }}
         
   build:
     name: Test ${{ matrix.os }} Python ${{ matrix.python_version }}
