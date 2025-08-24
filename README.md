@@ -3,7 +3,7 @@
 
 ![pylint](https://img.shields.io/badge/PyLint-7.26-orange?logo=python&logoColor=white)
 [![Django CI](https://github.com/bessyhuang/myaccounts/actions/workflows/django.yml/badge.svg)](https://github.com/bessyhuang/myaccounts/actions/workflows/django.yml)
-![codecov](https://codecov.io/gh/你的帳號/myaccounts/branch/master/graph/badge.svg)
+![codecov](https://codecov.io/gh/bessyhuang/myaccounts/branch/master/graph/badge.svg)
 
 ## 專案基本資料
 - 專案名稱：我的記帳本
