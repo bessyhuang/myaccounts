@@ -8,6 +8,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: Dev
     strategy:
       matrix:
         python-version: ["3.12"]
@@ -30,7 +31,11 @@ jobs:
     - name: Run PyLint
       env:
         DJANGO_SETTINGS_MODULE: project_chia.settings
-        SECRET_KEY: dummy-secret-key-for-linting
+        DB_NAME: ${{ secrets.POSTGRES_DB }}
+        DB_USER: ${{ secrets.POSTGRES_USER }}
+        DB_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+        DB_HOST: localhost
+        SECRET_KEY: ${{ secrets.SECRET_KEY }}
       run: |
         # 安裝 pylint 與 pylint-django
         pip install pylint pylint-django python-decouple
