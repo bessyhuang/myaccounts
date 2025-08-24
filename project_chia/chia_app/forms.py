@@ -15,7 +15,7 @@ class RecordForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields["balance_type"].initial = "支出"
 
-    class Meta:
+    class Meta:  # pylint: disable=R0903
         """設定欄位於前端的顯示（widgets）"""
 
         model = Record
