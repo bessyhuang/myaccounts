@@ -1,0 +1,33 @@
+repos:
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v3.0.1
+    hooks:
+      - id: prettier
+        files: \.(js|css|md|json|yaml|yml)$
+        exclude: '(^\.github/workflows/pylint\.yml$|^\.github/workflows/django\.yml$|^dev_note\.md$|^\.gitignore$)'
+
+  - repo: https://github.com/psf/black
+    rev: 23.7.0
+    hooks:
+      - id: black
+        language_version: python3.10
+        exclude: '(^\.github/workflows/pylint\.yml$|^\.github/workflows/django\.yml$|^dev_note\.md$|^\.gitignore$)'
+
+  - repo: https://github.com/PyCQA/flake8
+    rev: 7.0.0
+    hooks:
+      - id: flake8
+        additional_dependencies: [flake8-django]
+        language_version: python3.10
+        args: ["--max-line-length=120", "--ignore=E203,W503"]
+        exclude: '(^\.github/workflows/pylint\.yml$|^\.github/workflows/django\.yml$|^dev_note\.md$|^\.gitignore$)'
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: trailing-whitespace
+        exclude: '(^\.github/workflows/pylint\.yml$|^\.github/workflows/django\.yml$|^dev_note\.md$|^\.gitignore$)'
+      - id: end-of-file-fixer
+        exclude: '(^\.github/workflows/pylint\.yml$|^\.github/workflows/django\.yml$|^dev_note\.md$|^\.gitignore$)'
+      - id: check-yaml
+        exclude: '(^\.github/workflows/pylint\.yml$|^\.github/workflows/django\.yml$|^dev_note\.md$|^\.gitignore$)'

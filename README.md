@@ -1,4 +1,5 @@
 # myaccounts
+
 [#Side Project]()&emsp;[#舊專案翻新]()
 
 ![pylint](https://img.shields.io/badge/PyLint-7.26-orange?logo=python&logoColor=white)
@@ -6,6 +7,7 @@
 ![codecov](https://codecov.io/gh/bessyhuang/myaccounts/branch/master/graph/badge.svg)
 
 ## 專案基本資料
+
 - 專案名稱：我的記帳本
 - 基本功能：新增 Create、讀取 Read、刪除 Delete、Login、Logout
 - 涵蓋技術：
@@ -17,15 +19,16 @@
 - Future Work：更新 Update、查詢 Query、串接＆建立 API
 
 ## 功能介紹
+
 ![image](https://github.com/bessyhuang/myaccounts/assets/42068007/7c110e62-870f-46e1-96de-5182ba281799)
 ![image](https://github.com/bessyhuang/myaccounts/assets/42068007/b6ecf4f6-d7bd-4639-bc42-7c288547c732)
 
 ## 使用教學
 
-
-
 我的筆記：
->>  URL: https://hackmd.io/s/SJnKEOBDQ#Django-%E7%B6%B2%E7%AB%99%E9%96%8B%E7%99%BC
+
+> > URL: https://hackmd.io/s/SJnKEOBDQ#Django-%E7%B6%B2%E7%AB%99%E9%96%8B%E7%99%BC
 
 ### 補充
+
 - MariaDB 安裝於 Django 的操作步驟：django mariadb ubuntu 18.04.odt

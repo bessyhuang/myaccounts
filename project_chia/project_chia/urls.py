@@ -15,13 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+
 # from django.contrib.auth import views as auth_views
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('app/', include('chia_app.urls')),
-
+    path("admin/", admin.site.urls),
+    path("app/", include("chia_app.urls")),
     # login, logout, password_change, password_reset
     path("accounts/", include("django.contrib.auth.urls")),
     # path('accounts/logout/', auth_views.LogoutView.as_view(), name='logout'),

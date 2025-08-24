@@ -101,3 +101,111 @@ Django pytest / manage.py test 會自動建立一個測試資料庫，而你的 
 	```postgresql
 	accounting=# CREATE DATABASE accounting_test;
 	```
+
+## 3. 設定 GitHub Actions (CI)
+目標：
+1. 用 `pytest` 替代內建 Django test
+2. 加入 Codecov 工具的 `coverage`，來測量與呈現程式碼測試覆蓋率（code coverage）
+3. 更新 GitHub Actions (django.yml)
+4. 顯示 Coverage Badge
+
+- Codecov 是什麼？
+	- Codecov 是一個 雲端服務平台，用來收集、分析、追蹤程式碼測試覆蓋率。
+	- 它可以與多種 CI/CD 系統（GitHub Actions、GitLab CI、CircleCI 等）整合。
+	- 它支援多種程式語言的測試報告（Python、JavaScript、Java、Go 等）。
+- Coverage 是什麼？
+	- **Coverage（覆蓋率）**指的是程式碼中有多少行、多少分支被測試程式執行過。
+	- 常見指標：
+		- Line coverage：程式碼中被測試過的行數百分比。
+		- Branch coverage：程式碼條件分支（if/else）被測試過的比例。
+	- 例子：
+		- 如果你只測試 add(1, 2)，行 coverage 是 100%，branch coverage 也可能是 100%（因為沒有分支）。
+		- 如果函數內有 if 分支，沒有測試到所有條件，branch coverage 就會低於 100%。
+
+		```python
+		def add(a, b):
+		    return a + b
+		```
+		
+流程：
+1. 第一步：安裝必要套件，並把這些加入 dev-requirements.txt
+	```python
+	pip install pytest pytest-django coverage
+	```
+2. 第二步：設定 pytest
+	> 在專案根目錄下建立 pytest.ini
+	```ini
+	[pytest]
+	DJANGO_SETTINGS_MODULE = myaccounts.settings
+	python_files = tests.py test_*.py *_tests.py
+	```
+3. 第三步：建立測試檔案 `accounts/tests/test_models.py`
+	```python
+	import pytest
+	from accounts.models import YourModelName
+
+	@pytest.mark.django_db
+	def test_model_str():
+	    obj = YourModelName.objects.create(...)  # 填寫必要欄位
+	    assert str(obj) == "你預期的名稱"
+	```
+4. 第四步：更新 GitHub Actions workflow `.github/workflows/django.yml`
+5. 第五步：設定 Codecov 並顯示 Badge
+	- [https://app.codecov.io/gh](https://app.codecov.io/gh)
+		> 登入 GitHub 後，找到你的 myaccounts repo，開啟它。
+		> 接著，選擇「Using GitHub Actions」、「Pytest」，需要 copy 「SECRET_KEY」，並且到 GitHub Settings -> Actions secrets and variables 設定 Repository secrets。
+	- 在 README.md 加入 badge：
+		```
+		![codecov](https://codecov.io/gh/你的帳號/myaccounts/branch/分支名稱/graph/badge.svg)
+		```
+
+最終成果
+- 每次 push 都會自動：
+	- 安裝依賴套件
+	- 建立 Postgres container
+	- 使用 pytest 測試
+	- 顯示 test 覆蓋率（coverage）
+	- 上傳到 Codecov 並可視化
+- README 會有漂亮的 Coverage badge
+
+延伸任務（加分）
+- 加入 pre-commit 自動執行 lint / format
+- 設定 deployment 自動釋出到 Heroku、Railway、或自己的 VPS
+
+## 4. 加入 pre-commit 自動執行 lint / format（Local）
+目標：
+加入 pre-commit 可以在你每次 git commit 前自動執行 lint、format、甚至安全檢查，確保程式碼品質穩定。
+
+流程：
+1. 第一步：安裝 pre-commit
+	```bash
+	pip install pre-commit
+	```
+2. 第二步：在專案根目錄新增檔案 `.pre-commit-config.yaml`
+	- `black` → 自動格式化 Python 程式碼 (會自動修改檔案格式)
+	- `flake8` → 靜態檢查 Python 程式碼規範
+	- `prettier` → 格式化前端或文件檔案（可選） (會自動修改檔案格式)
+	- `trailing-whitespace` / `end-of-file-fixer` → 清理多餘空格 / 檔案尾空行
+3. 第三步：安裝 git hook
+	> 這會在 `.git/hooks/pre-commit` 建立 hook，每次 commit 前自動執行。
+	```bash
+	pre-commit install
+	```
+4. 第四步：手動執行一次檢查（可選）
+	> 這樣可以先格式化與檢查整個專案，避免 commit 時被大量錯誤擋住。
+	```bash
+	pre-commit run --all-files
+	```
+5. 第五步：整合到 CI（可選）
+	> 在 .github/workflows/ci.yml 裡，也可以加一個 step 執行 pre-commit，保證 PR / push 也符合規範
+	```yaml
+	- name: Run pre-commit checks
+	  uses: pre-commit/action@v3.0.0
+	  with:
+	    extra_args: "--all-files"
+	```
+
+好處
+- 本地 commit 就自動格式化 / 檢查，不必手動記得 run black / flake8
+- CI pipeline 可以統一驗證程式碼規範
+- 對團隊合作非常友好，減少「我本地 OK，但 CI fail」情況
