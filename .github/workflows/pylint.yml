@@ -29,7 +29,7 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Run PyLint
       env:
-        DJANGO_SETTINGS_MODULE: myaccounts.project_chia.settings
+        DJANGO_SETTINGS_MODULE: project_chia.settings
         SECRET_KEY: dummy-secret-key-for-linting
       run: |
         # 安裝 pylint 與 pylint-django
