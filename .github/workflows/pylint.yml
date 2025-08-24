@@ -32,5 +32,8 @@ jobs:
         # 安裝 pylint 與 pylint-django
         pip install pylint pylint-django
 
+        # 設定 Django settings module
+        export DJANGO_SETTINGS_MODULE=project_chia.settings
+
         # 執行 PyLint，忽略 migrations 資料夾，並載入 pylint-django plugin
         pylint --load-plugins pylint_django project_chia/chia_app --ignore=migrations
