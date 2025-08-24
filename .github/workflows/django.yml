@@ -9,14 +9,15 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    environment: Dev
 
     services:
       postgres:
         image: postgres:13
         env:
-          POSTGRES_DB: test_accounting
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
         ports: ['5432:5432']
         options: >-
           --health-cmd pg_isready
@@ -25,7 +26,7 @@ jobs:
           --health-retries 5
 
     env:
-      DATABASE_URL: postgres://postgres:postgres@localhost:5432/test_accounting
+      DATABASE_URL: postgres://${{ secrets.POSTGRES_USER }}:${{ secrets.POSTGRES_PASSWORD }}@localhost:5432/${{ secrets.POSTGRES_DB }}
       DEBUG: '1'
 
     steps:
@@ -40,11 +41,29 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r dev-requirements.txt
-        pip install pytest pytest-django coverage
+        pip install pytest pytest-django coverage codecov flake8
 
-    - name: Run tests with coverage
+    - name: Lint code
+      run: |
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+
+    - name: Wait for Postgres
+      run: |
+        until pg_isready -h localhost -p 5432; do
+          echo "Waiting for Postgres..."
+          sleep 1
+        done
+          
+    - name: Run migrations and tests with coverage
+      env:
+        DB_NAME: ${{ secrets.POSTGRES_DB }}
+        DB_USER: ${{ secrets.POSTGRES_USER }}
+        DB_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+        DB_HOST: localhost
+        SECRET_KEY: ${{ secrets.SECRET_KEY }}
       run: |
         cd project_chia
+        python manage.py migrate
         coverage run -m pytest
         coverage report
         coverage xml
@@ -52,11 +71,11 @@ jobs:
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v5
       with:
-        files: ./coverage.xml
+        files: ./project_chia/coverage.xml
         token: ${{ secrets.CODECOV_TOKEN }}
         
   build:
-    name: Test ${{ matrix.os }} Python ${{ matrix.python_version }}
+    name: Build ${{ matrix.os }} Python ${{ matrix.python_version }}
     runs-on: ${{ matrix.os }}
     environment: Dev
     strategy:
